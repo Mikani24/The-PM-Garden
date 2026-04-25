@@ -114,7 +114,7 @@
 
     async function sendMessage() {
       var text = input.value.trim();
-      if (!text || !API_KEY) return;
+      if (!text) return;
 
       addMessage('user', text);
       input.value = '';
