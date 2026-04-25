@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — The PM Garden</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Nunito',sans-serif;background:#f7f5ef;color:#2c2c2a;}
+    .top-nav{position:fixed;top:0;left:0;right:0;background:rgba(247,245,239,0.92);backdrop-filter:blur(10px);padding:0.75rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;border-bottom:1px solid rgba(0,0,0,0.05);}
+    .top-nav .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;color:#2e5a1c;text-decoration:none;}
+    .top-nav .logo span{color:#b8860b;}
+    .nav-links{display:flex;gap:1.5rem;}
+    .nav-links a{text-decoration:none;font-size:0.88rem;font-weight:600;color:#5a6a4a;transition:color 0.2s;}
+    .nav-links a:hover{color:#2e5a1c;}
+
+    .page-hero{background:linear-gradient(135deg,#2e5a1c,#4a7028);padding:6rem 2rem 3rem;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.05);}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:3rem;font-weight:800;color:#fff;margin-bottom:0.5rem;}
+    .page-hero p{color:rgba(255,255,255,0.8);font-size:1.1rem;max-width:500px;margin:0 auto;}
+
+    .content{max-width:800px;margin:0 auto;padding:3rem 2rem;}
+    .content h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:#2e5a1c;margin:2.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid #e8e6e0;}
+    .content h2:first-child{margin-top:0;}
+    .content p{font-size:1rem;line-height:1.75;color:#555;margin-bottom:1rem;}
+    .content ul{margin:1rem 0 1.5rem 1.5rem;}
+    .content li{font-size:0.95rem;color:#555;line-height:1.7;margin-bottom:0.5rem;}
+
+    .ai-box{background:#F4F3FE;border:1px solid #AFA9EC;border-radius:12px;padding:2rem;margin:1.5rem 0;}
+    .ai-box h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:#26215C;margin-bottom:0.75rem;}
+    .ai-box p{color:#26215C;opacity:0.85;font-size:0.95rem;}
+    .ai-box ul{margin:0.75rem 0 0 1.25rem;}
+    .ai-box li{color:#26215C;opacity:0.85;font-size:0.9rem;line-height:1.6;}
+
+    .eccsr-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:1.5rem 0;}
+    .eccsr-card{padding:1rem;border-radius:10px;text-align:center;}
+    .eccsr-card .letter{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;margin-bottom:4px;}
+    .eccsr-card .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+
+    .site-footer{background:#2e5a1c;color:rgba(255,255,255,0.7);padding:2rem;text-align:center;font-size:13px;margin-top:3rem;}
+    .site-footer a{color:#b8860b;text-decoration:none;}
+
+    @media(max-width:640px){
+      .page-hero{padding:5rem 1.25rem 2rem;}
+      .page-hero h1{font-size:2rem;}
+      .content{padding:2rem 1.25rem;}
+      .eccsr-grid{grid-template-columns:repeat(3,1fr);}
+    }
+  </style>
+</head>
+<body>
+  <nav class="top-nav">
+    <a href="index.html" class="logo">PM <span>Garden</span></a>
+    <div class="nav-links">
+      <a href="index.html#topics">Topics</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <h1>About This Guide</h1>
+    <p>Why the PM Garden exists and how it was made</p>
+  </header>
+
+  <main class="content">
+    <h2>The PM Garden</h2>
+    <p>The PM Garden is an online project management guide designed specifically for small businesses and charities working in Ireland. It was created by <strong>Anikó Mikolasek</strong> as the individual assignment for BMGT45510 (Company Project) at UCD Michael Smurfit Graduate Business School.</p>
+    <p>Special thanks to <strong>Joe Houghton</strong> for his guidance, the ECCSR framework, and his encouragement to explore AI tools as part of the learning journey.</p>
+    <p>The garden metaphor reflects the core belief of this guide: that good project management helps organisations grow. Like tending a garden, it requires patience, planning, the right tools, and constant attention. Each topic is a petal on the flower: interconnected and essential for healthy growth.</p>
+
+    <h2>Purpose & Audience</h2>
+    <p>This guide is aimed at:</p>
+    <ul>
+      <li><strong>Small business owners</strong> in Ireland who need practical, jargon-free PM guidance</li>
+      <li><strong>Charity and non-profit staff</strong> managing funded projects for the first time</li>
+      <li><strong>Volunteer coordinators</strong> looking for structured approaches to organising work</li>
+      <li><strong>Anyone</strong> who wants to understand PM fundamentals without wading through dense textbooks</li>
+    </ul>
+    <p>The content bridges academic best practice and real-world application, drawing on both peer-reviewed literature and practical business resources.</p>
+
+    <h2>The ECCSR Framework</h2>
+    <p>Throughout this guide, you'll see references to the ECCSR framework developed by Houghton (2022). It provides five lenses through which every project should be evaluated:</p>
+    <div class="eccsr-grid">
+      <div class="eccsr-card" style="background:#C8E6C9;"><div class="letter" style="color:#173404;">E</div><div class="label" style="color:#173404;">Ethical</div></div>
+      <div class="eccsr-card" style="background:#A8D8EA;"><div class="letter" style="color:#0C447C;">C</div><div class="label" style="color:#0C447C;">Collaborative</div></div>
+      <div class="eccsr-card" style="background:#FFD966;"><div class="letter" style="color:#5C4A05;">C</div><div class="label" style="color:#5C4A05;">Creative</div></div>
+      <div class="eccsr-card" style="background:#9FE1CB;"><div class="letter" style="color:#04342C;">S</div><div class="label" style="color:#04342C;">Sustainable</div></div>
+      <div class="eccsr-card" style="background:#E8A0BF;"><div class="letter" style="color:#6B1A3A;">R</div><div class="label" style="color:#6B1A3A;">Results</div></div>
+    </div>
+
+    <h2>AI Disclosure</h2>
+    <div class="ai-box">
+      <h3>Use of AI in this assignment</h3>
+      <p>In accordance with the module's AI usage policy, the following disclosure outlines how artificial intelligence tools were used in the preparation of this website:</p>
+      <ul>
+        <li><strong>Tool used:</strong> Claude (Anthropic) — claude.ai</li>
+        <li><strong>Website design and code:</strong> Claude was used to assist with generating the HTML, CSS, and JavaScript code for the website layout, interactive flower navigation menu, and page templates. All design decisions (garden theme, colour choices, structure) were directed by the student.</li>
+        <li><strong>Content drafting:</strong> Claude was used to help draft initial content for topic pages. All content was reviewed, edited, and supplemented with the student's own analysis, insights, and references to ensure originality and academic rigour.</li>
+        <li><strong>AI Chatbot:</strong> The site includes an AI-powered chatbot using the Claude API to help visitors explore PM concepts interactively.</li>
+        <li><strong>Research assistance:</strong> Claude was used to help identify and structure relevant academic references. All references were verified independently for accuracy.</li>
+      </ul>
+     
+    </div>
+
+    <h2>References</h2>
+    <p>Key references used throughout this guide include:</p>
+    <ul>
+      <li>Houghton, J. (2022) <em>Project Management Made Easy — the ECCSR Approach</em>.</li>
+      <li>PMI (2021) <em>A Guide to the Project Management Body of Knowledge (PMBOK Guide)</em>. 7th ed.</li>
+      <li>APM (2019) <em>APM Body of Knowledge</em>. 7th ed.</li>
+      <li>Kerzner, H. (2022) <em>Project Management: A Systems Approach</em>. 13th ed. Wiley.</li>
+      <li>AXELOS (2017) <em>Managing Successful Projects with PRINCE2</em>. 6th ed.</li>
+      <li>Additional topic-specific references are cited on each individual topic page.</li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <p>The PM Garden © 2026 | Created by Anikó Mikolasek | UCD Smurfit — BMGT45510 | <a href="index.html">Home</a> · <a href="contact.html">Contact</a></p>
+  </footer>
+</body>
+</html>

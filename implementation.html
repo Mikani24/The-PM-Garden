@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Implementation — The PM Garden</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Nunito',sans-serif; background:#f7f5ef; color:#2c2c2a; }
+    .top-nav{position:fixed;top:0;left:0;right:0;background:rgba(247,245,239,0.92);backdrop-filter:blur(10px);padding:0.75rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;border-bottom:1px solid rgba(0,0,0,0.05);}
+    .top-nav .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;color:#2e5a1c;text-decoration:none;}.top-nav .logo span{color:#b8860b;}
+    .nav-links{display:flex;gap:1.5rem;}.nav-links a{text-decoration:none;font-size:0.88rem;font-weight:600;color:#5a6a4a;transition:color 0.2s;}.nav-links a:hover{color:#2e5a1c;}
+    .hero{background:linear-gradient(135deg,#A8D8EA 0%,#6BBCD4 100%);padding:6rem 2rem 3rem;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.08);}
+    .hero::after{content:'';position:absolute;bottom:-60px;left:30%;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.05);}
+    .hero-inner{max-width:800px;margin:0 auto;position:relative;z-index:1;}
+    .back-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:13px;color:#0C447C;opacity:0.7;margin-bottom:1.5rem;transition:opacity 0.2s;}.back-link:hover{opacity:1;}
+    .hero-badge{display:inline-block;background:rgba(255,255,255,0.25);color:#0C447C;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:4px 14px;border-radius:20px;margin-bottom:1rem;}
+    .hero h1{font-family:'Playfair Display',serif;font-size:3rem;font-weight:800;color:#fff;line-height:1.1;margin-bottom:0.5rem;text-shadow:0 2px 8px rgba(0,0,0,0.1);}.hero .sub{font-size:1.15rem;color:rgba(255,255,255,0.85);max-width:500px;}
+    .content{max-width:800px;margin:0 auto;padding:2.5rem 2rem 3rem;}
+    .intro-card{background:#fff;border-radius:12px;padding:2rem;margin-bottom:2.5rem;border-left:5px solid #A8D8EA;font-size:1.05rem;color:#555;line-height:1.75;}
+    .key-concept{background:linear-gradient(135deg,#EFF8FC,#EFF8FCee);border-radius:12px;padding:1.5rem 1.75rem;margin:1.5rem 0;border:1px solid #6BBCD433;}
+    .key-concept .kc-label{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#6BBCD4;margin-bottom:0.6rem;}
+    .key-concept .kc-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#0C447C;margin-bottom:0.5rem;}.key-concept p{font-size:0.95rem;color:#0C447C;line-height:1.65;opacity:0.85;}
+    .section{margin-bottom:2.5rem;}.section-header{display:flex;align-items:center;gap:14px;margin-bottom:1rem;}
+    .section-num{width:40px;height:40px;border-radius:50%;background:#A8D8EA;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:18px;flex-shrink:0;}
+    .section h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#2c2c2a;}.section p{font-size:0.98rem;color:#444;line-height:1.75;margin-bottom:0.8rem;}
+    .tip-box{display:flex;gap:14px;background:#FFFBEB;border:1px solid #E8BF30;border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0;}
+    .tip-box .tip-icon{width:36px;height:36px;border-radius:50%;background:#FFD966;color:#5C4A05;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;}
+    .tip-box .tip-content{font-size:0.92rem;color:#5C4A05;line-height:1.6;}.tip-box .tip-label{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+    .dyk{background:#EFF8FC;border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0;border:1px solid #6BBCD4;}.dyk .dyk-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#0C447C;margin-bottom:0.4rem;}.dyk p{font-size:0.92rem;color:#0C447C;line-height:1.6;}
+    .pullquote{border-left:4px solid #6BBCD4;padding:1rem 1.5rem;margin:1.5rem 0;background:#A8D8EA0a;}.pullquote p{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:#0C447C;line-height:1.55;}.pullquote .pq-source{font-family:'Nunito',sans-serif;font-size:12px;font-style:normal;color:#999;margin-top:6px;}
+    .checklist{margin:1rem 0 1.5rem;}.checklist-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #f0ede6;}.checklist-item:last-child{border-bottom:none;}
+    .check-icon{width:22px;height:22px;border-radius:50%;background:#A8D8EA;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px;}.checklist-item span{font-size:0.95rem;color:#444;line-height:1.5;}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:1.5rem 0;}.compare-card{background:#fff;border-radius:10px;padding:1.25rem;border:1px solid #e8e6e0;}.compare-card .cc-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:0.5rem;padding-bottom:0.4rem;}.compare-card p{font-size:0.88rem;color:#666;line-height:1.55;}
+    .warn-box{display:flex;gap:14px;background:#FEF2F2;border:1px solid #F08A8A;border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0;}.warn-box .warn-icon{width:36px;height:36px;border-radius:50%;background:#F9B4B4;color:#791F1F;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;}.warn-box .warn-content{font-size:0.92rem;color:#791F1F;line-height:1.6;}.warn-box .warn-label{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+    .success-box{display:flex;gap:14px;background:#F0F9F0;border:1px solid #81C784;border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0;}.success-box .suc-icon{width:36px;height:36px;border-radius:50%;background:#C8E6C9;color:#173404;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;}.success-box .suc-content{font-size:0.92rem;color:#173404;line-height:1.6;}.success-box .suc-label{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+    .video-embed{margin:1.5rem 0;border-radius:12px;overflow:hidden;border:1px solid #e8e6e0;background:#000;}
+    .video-embed iframe{width:100%;height:360px;border:none;display:block;}
+    .video-caption{padding:10px 16px;background:#fff;font-size:12px;color:#888;border-top:1px solid #e8e6e0;}
+    .refs-box{background:#fff;border-radius:10px;padding:1.5rem 1.75rem;margin:2rem 0;border:1px solid #e8e6e0;}.refs-box h3{font-size:14px;font-weight:700;margin-bottom:10px;}.refs-box ul{list-style:none;}.refs-box li{font-size:12.5px;color:#666;line-height:1.7;padding:3px 0 3px 16px;position:relative;}.refs-box li::before{content:'';position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:#A8D8EA;}
+    .nav-footer{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;margin-top:1rem;border-top:2px solid #f0ede6;}.nav-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:14px;color:#666;transition:color 0.2s;}.nav-link:hover{color:#2c2c2a;}.nav-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform 0.2s;}.nav-dot:hover{transform:scale(1.1);}.nav-link-label{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:1px;}
+    @media(max-width:640px){.hero{padding:5rem 1.25rem 2rem;}.hero h1{font-size:2rem;}.content{padding:1.5rem 1.25rem 2rem;}.compare-grid{grid-template-columns:1fr;}.video-embed iframe{height:220px;}}
+    .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}.fade-in.visible{opacity:1;transform:translateY(0);}</style>
+</head>
+<body>
+<nav class="top-nav"><a href="index.html" class="logo">PM <span>Garden</span></a><div class="nav-links"><a href="index.html#topics">Topics</a><a href="index.html#tools">Tools</a><a href="about.html">About</a><a href="contact.html">Contact</a></div></nav>
+<header class="hero"><div class="hero-inner">
+<a href="index.html" class="back-link"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="#0C447C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Back to the garden</a>
+<div class="hero-badge">Topic 3 of 12</div>
+<h1>Implementation</h1><p class="sub">Executing the plan — turning strategy into action</p>
+</div></header>
+<main class="content">
+<div class="intro-card fade-in">Implementation is where plans meet reality. This is the doing phase: coordinating tasks, managing people, tracking progress, solving problems, and keeping everything moving towards your objectives.</div>
+
+<div class="key-concept fade-in"><div class="kc-label"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="#6BBCD4" stroke-width="1.5"/><path d="M8 4v5l3 2" stroke="#6BBCD4" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg> Key concept</div><div class="kc-title">Rhythm and routine drive execution</div><p>Consistent check-in points keep the team aligned and surface issues before they become crises. Even 10-minute daily standups can be transformative for small teams.</p></div>
+<div class="section fade-in"><div class="section-header"><div class="section-num">1</div><h2>Day-to-day execution</h2></div><p>Each person shares: what they did yesterday, what they're doing today, and any blockers. Weekly reviews track whether you're on course. Consistency is what matters.</p>
+<div class="video-embed fade-in"><iframe src="https://youtu.be/ikEuW6Rdfu0?si=gbPSsZTzx9egm1Q1" allowfullscreen loading="lazy"></iframe><div class="video-caption">Project Execution and Monitoring</div></div>
+<div class="tip-box"><div class="tip-icon">!</div><div class="tip-content"><div class="tip-label">Pro tip</div>Document decisions as you go. A simple decision log saves enormous time later (Wysocki, 2019).</div></div></div>
+<div class="section fade-in"><div class="section-header"><div class="section-num">2</div><h2>Tracking progress</h2></div>
+<div class="compare-grid"><div class="compare-card" style="border-top:4px solid #81C784;"><div class="cc-title" style="color:#173404;">Traffic light system</div><p><strong style="color:#27500A;">Green:</strong> On track<br><strong style="color:#BA7517;">Amber:</strong> At risk<br><strong style="color:#A32D2D;">Red:</strong> Off track — escalate</p></div><div class="compare-card" style="border-top:4px solid #A8D8EA;"><div class="cc-title" style="color:#0C447C;">Budget check</div><p>If you're <strong>50% through the timeline but spent 70% of budget</strong>, something needs to change. Excel works perfectly for this.</p></div></div></div>
+<div class="section fade-in"><div class="section-header"><div class="section-num">3</div><h2>Handling scope creep</h2></div><p>Scope creep happens through seemingly reasonable requests. The solution: manage changes deliberately.</p>
+<div class="warn-box"><div class="warn-icon">!</div><div class="warn-content"><div class="warn-label">Watch out</div>Any change request gets written down, assessed for impact on time/cost/resources, and formally approved or rejected (PMI, 2021).</div></div>
+<div class="success-box"><div class="suc-icon">&#10003;</div><div class="suc-content"><div class="suc-label">Best practice</div>A one-page change request form and a quick conversation with your sponsor is often all you need.</div></div></div>
+<div class="section fade-in"><div class="section-header"><div class="section-num">4</div><h2>Communication</h2></div>
+<div class="checklist"><div class="checklist-item"><div class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Your team</strong> wants detail: tasks, deadlines, dependencies.</span></div><div class="checklist-item"><div class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Your sponsor</strong> wants the headline: on track? Decisions needed?</span></div><div class="checklist-item"><div class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Stakeholders</strong> want reassurance: key milestones and what's next.</span></div><div class="checklist-item"><div class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Create a comms plan</strong> : who, what, how often, which channel.</span></div></div></div>
+<div class="refs-box fade-in"><h3>References</h3><ul><li>PMI (2021) <em>PMBOK Guide</em>. 7th ed.</li>
+<li>Wysocki, R. (2019) <em>Effective Project Management</em>. 8th ed. Wiley.</li>
+<li>Kotter, J. (2012) <em>Leading Change</em>. HBR Press.</li>
+<li>APM (2019) <em>APM Body of Knowledge</em>. 7th ed.</li>
+<li>Houghton, J. (2022) <em>Project Management Made Easy — the ECCSR Approach</em>.</li></ul></div>
+<div class="nav-footer">
+<a href="planning.html" class="nav-link"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div class="nav-link-label">Previous</div>Planning</div></a>
+<a href="index.html" class="nav-link" style="font-size:12px;color:#bbb;"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 1L1 7h3v7h8V7h3L8 1z" fill="none" stroke="#bbb" stroke-width="1.3"/></svg> Garden</a>
+<a href="teams.html" class="nav-link"><div style="text-align:right;"><div class="nav-link-label">Next topic</div>Teams</div><div class="nav-dot" style="background:#FFD966;border:2px solid #E8BF30;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="#5C4A05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></a>
+</div>
+</main>
+<script>
+  var f=document.querySelectorAll('.fade-in');var o=new IntersectionObserver(function(e){e.forEach(function(i){if(i.isIntersecting)i.target.classList.add('visible');});},{threshold:0.1});f.forEach(function(i){o.observe(i);});
+</script>
+</body></html>

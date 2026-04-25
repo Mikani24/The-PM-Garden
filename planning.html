@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planning — The PM Garden</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Nunito',sans-serif; background:#f7f5ef; color:#2c2c2a; }
+    .top-nav{position:fixed;top:0;left:0;right:0;background:rgba(247,245,239,0.92);backdrop-filter:blur(10px);padding:0.75rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;border-bottom:1px solid rgba(0,0,0,0.05);}
+    .top-nav .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;color:#2e5a1c;text-decoration:none;}.top-nav .logo span{color:#b8860b;}
+    .nav-links{display:flex;gap:1.5rem;}.nav-links a{text-decoration:none;font-size:0.88rem;font-weight:600;color:#5a6a4a;transition:color 0.2s;}.nav-links a:hover{color:#2e5a1c;}
+    .hero{background:linear-gradient(135deg,#F4C7A0 0%,#E8A86E 100%);padding:6rem 2rem 3rem;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.08);}
+    .hero::after{content:'';position:absolute;bottom:-60px;left:30%;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.05);}
+    .hero-inner{max-width:800px;margin:0 auto;position:relative;z-index:1;}
+    .back-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:13px;color:#6B3A10;opacity:0.7;margin-bottom:1.5rem;transition:opacity 0.2s;}.back-link:hover{opacity:1;}
+    .hero-badge{display:inline-block;background:rgba(255,255,255,0.25);color:#6B3A10;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:4px 14px;border-radius:20px;margin-bottom:1rem;}
+    .hero h1{font-family:'Playfair Display',serif;font-size:3rem;font-weight:800;color:#fff;line-height:1.1;margin-bottom:0.5rem;text-shadow:0 2px 8px rgba(0,0,0,0.1);}.hero .sub{font-size:1.15rem;color:rgba(255,255,255,0.85);max-width:500px;}
+    .content{max-width:800px;margin:0 auto;padding:2.5rem 2rem 3rem;}
+    .intro-card{background:#fff;border-radius:12px;padding:2rem;margin-bottom:2.5rem;border-left:5px solid #F4C7A0;font-size:1.05rem;color:#555;line-height:1.75;}
+    .key-concept{background:linear-gradient(135deg,#FEF7F0,#FEF7F0ee);border-radius:12px;padding:1.5rem 1.75rem;margin:1.5rem 0;border:1px solid #E8A86E33;}
+    .key-concept .kc-label{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#E8A86E;margin-bottom:0.6rem;}
+    .key-concept .kc-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#6B3A10;margin-bottom:0.5rem;}.key-concept p{font-size:0.95rem;color:#6B3A10;line-height:1.65;opacity:0.85;}
+    .section{margin-bottom:2.5rem;}.section-header{display:flex;align-items:center;gap:14px;margin-bottom:1rem;}
+    .section-num{width:40px;height:40px;border-radius:50%;background:#F4C7A0;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:18px;flex-shrink:0;}
+    .section h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#2c2c2a;}.section p{font-size:0.98rem;color:#444;line-height:1.75;margin-bottom:0.8rem;}
+    .tip-box{display:flex;gap:14px;background:#FFFBEB;border:1px solid #E8BF30;border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0;}
+    .tip-box .tip-icon{width:36px;height:36px;border-radius:50%;background:#FFD966;color:#5C4A05;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;}
+    .tip-box .tip-content{font-size:0.92rem;color:#5C4A05;line-height:1.6;}.tip-box .tip-label{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+    .dyk{background:#EFF8FC;border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0;border:1px solid #6BBCD4;}.dyk .dyk-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#0C447C;margin-bottom:0.4rem;}.dyk p{font-size:0.92rem;color:#0C447C;line-height:1.6;}
+    .pullquote{border-left:4px solid #E8A86E;padding:1rem 1.5rem;margin:1.5rem 0;background:#F4C7A00a;}.pullquote p{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:#6B3A10;line-height:1.55;}.pullquote .pq-source{font-family:'Nunito',sans-serif;font-size:12px;font-style:normal;color:#999;margin-top:6px;}
+    .checklist{margin:1rem 0 1.5rem;}.checklist-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #f0ede6;}.checklist-item:last-child{border-bottom:none;}
+    .check-icon{width:22px;height:22px;border-radius:50%;background:#F4C7A0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px;}.checklist-item span{font-size:0.95rem;color:#444;line-height:1.5;}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:1.5rem 0;}.compare-card{background:#fff;border-radius:10px;padding:1.25rem;border:1px solid #e8e6e0;}.compare-card .cc-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:0.5rem;padding-bottom:0.4rem;}.compare-card p{font-size:0.88rem;color:#666;line-height:1.55;}
+    .warn-box{display:flex;gap:14px;background:#FEF2F2;border:1px solid #F08A8A;border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0;}.warn-box .warn-icon{width:36px;height:36px;border-radius:50%;background:#F9B4B4;color:#791F1F;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;}.warn-box .warn-content{font-size:0.92rem;color:#791F1F;line-height:1.6;}.warn-box .warn-label{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+    .success-box{display:flex;gap:14px;background:#F0F9F0;border:1px solid #81C784;border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0;}.success-box .suc-icon{width:36px;height:36px;border-radius:50%;background:#C8E6C9;color:#173404;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;}.success-box .suc-content{font-size:0.92rem;color:#173404;line-height:1.6;}.success-box .suc-label{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+    .video-embed{margin:1.5rem 0;border-radius:12px;overflow:hidden;border:1px solid #e8e6e0;background:#000;}
+    .video-embed iframe{width:100%;height:360px;border:none;display:block;}
+    .video-caption{padding:10px 16px;background:#fff;font-size:12px;color:#888;border-top:1px solid #e8e6e0;}
+    .refs-box{background:#fff;border-radius:10px;padding:1.5rem 1.75rem;margin:2rem 0;border:1px solid #e8e6e0;}.refs-box h3{font-size:14px;font-weight:700;margin-bottom:10px;}.refs-box ul{list-style:none;}.refs-box li{font-size:12.5px;color:#666;line-height:1.7;padding:3px 0 3px 16px;position:relative;}.refs-box li::before{content:'';position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:#F4C7A0;}
+    .nav-footer{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;margin-top:1rem;border-top:2px solid #f0ede6;}.nav-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:14px;color:#666;transition:color 0.2s;}.nav-link:hover{color:#2c2c2a;}.nav-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform 0.2s;}.nav-dot:hover{transform:scale(1.1);}.nav-link-label{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:1px;}
+    @media(max-width:640px){.hero{padding:5rem 1.25rem 2rem;}.hero h1{font-size:2rem;}.content{padding:1.5rem 1.25rem 2rem;}.compare-grid{grid-template-columns:1fr;}.video-embed iframe{height:220px;}}
+    .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}.fade-in.visible{opacity:1;transform:translateY(0);}</style>
+</head>
+<body>
+<nav class="top-nav"><a href="index.html" class="logo">PM <span>Garden</span></a><div class="nav-links"><a href="index.html#topics">Topics</a><a href="index.html#tools">Tools</a><a href="about.html">About</a><a href="contact.html">Contact</a></div></nav>
+<header class="hero"><div class="hero-inner">
+<a href="index.html" class="back-link"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="#6B3A10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Back to the garden</a>
+<div class="hero-badge">Topic 2 of 12</div>
+<h1>Planning</h1><p class="sub">Breaking work into tasks, timelines, and resources</p>
+</div></header>
+<main class="content">
+<div class="intro-card fade-in">Planning is the engine room of project management. It's where your strategic vision gets translated into concrete tasks, realistic timelines, and allocated resources. For small organisations with limited budgets, effective planning is the difference between delivering value and burning through resources.</div>
+
+<div class="key-concept fade-in"><div class="kc-label"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="#E8A86E" stroke-width="1.5"/><path d="M8 4v5l3 2" stroke="#E8A86E" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg> Key concept</div><div class="kc-title">The Work Breakdown Structure (WBS)</div><p>The WBS takes a large project and breaks it into manageable pieces: progressively smaller deliverables until you reach work packages that can be assigned, estimated, and tracked (Meredith &amp; Mantel, 2020).</p></div>
+<div class="section fade-in"><div class="section-header"><div class="section-num">1</div><h2>Breaking it down</h2></div><p>Think of it like a house renovation. Top level: "Renovate Kitchen." Below that: Design, Demolition, Plumbing, Electrical, Fitting, Decoration. Each breaks down further. The beauty is nothing gets forgotten and everyone sees where their work fits.</p>
+<div class="video-embed fade-in"><iframe src="https://www.youtube.com/watch?v=ZWmXi3TW1yA" allowfullscreen loading="lazy"></iframe><div class="video-caption">How to Create a Project Plan — ProjectManager</div></div>
+<div class="dyk"><div class="dyk-label">Did you know?</div><p>Free tools like Trello, Asana, and Microsoft Planner make it straightforward to create visual task boards. Many have free tiers perfect for small organisations.</p></div></div>
+<div class="section fade-in"><div class="section-header"><div class="section-num">2</div><h2>Scheduling and Gantt charts</h2></div><p>The Gantt chart, (a horizontal bar chart showing tasks against time) remains the most widely used scheduling tool: visual, intuitive, and shows dependencies and overlaps at a glance.</p>
+<div class="compare-grid"><div class="compare-card" style="border-left:4px solid #F4C7A0;"><div class="cc-title" style="color:#6B3A10;">Key concepts</div><p><strong>Dependencies:</strong> Task B needs Task A first<br><strong>Milestones:</strong> Key checkpoints<br><strong>Critical path:</strong> Longest chain: delays here delay everything<br><strong>Float:</strong> How much slack a task has</p></div><div class="compare-card" style="border-left:4px solid #F9B4B4;"><div class="cc-title" style="color:#791F1F;">Common mistakes</div><p><strong>Over-optimism</strong> on timelines<br><strong>No buffer:</strong> add 15-20% contingency<br><strong>Ignoring dependencies</strong><br><strong>Too much detail:</strong> a plan nobody maintains is useless</p></div></div></div>
+<div class="section fade-in"><div class="section-header"><div class="section-num">3</div><h2>Resource planning on a budget</h2></div>
+<div class="warn-box"><div class="warn-icon">!</div><div class="warn-content"><div class="warn-label">Watch out</div>A "full time" team member who handles support, emails, and meetings is really only available for 4-5 hours of focused project work per day. Plan for real capacity, not theoretical.</div></div>
+<p>Cost everything, even "free" resources. Volunteer time has opportunity cost. Understanding true cost helps you make better decisions.</p>
+<div class="tip-box"><div class="tip-icon">!</div><div class="tip-content"><div class="tip-label">Pro tip</div>Use a <strong>RACI matrix: </strong> Responsible, Accountable, Consulted, Informed for each deliverable. This prevents confusion and duplication.</div></div></div>
+<div class="section fade-in"><div class="section-header"><div class="section-num">4</div><h2>Keeping the plan alive</h2></div>
+<div class="checklist"><div class="checklist-item"><div class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Review weekly</strong> for short projects, fortnightly for longer ones.</span></div><div class="checklist-item"><div class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Involve the doers.</strong> They know how long things actually take.</span></div><div class="checklist-item"><div class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Identify dependencies early.</strong> One overlooked link can cascade.</span></div><div class="checklist-item"><div class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Keep it proportionate.</strong> Match detail to complexity (APM, 2019).</span></div></div>
+<div class="pullquote"><p>"Plans are worthless, but planning is everything."</p><div class="pq-source">— Dwight D. Eisenhower</div></div></div>
+<div class="refs-box fade-in"><h3>References</h3><ul><li>Meredith, J. &amp; Mantel, S. (2020) <em>Project Management: A Managerial Approach</em>. 10th ed. Wiley.</li>
+<li>APM (2019) <em>APM Body of Knowledge</em>. 7th ed.</li>
+<li>AXELOS (2017) <em>Managing Successful Projects with PRINCE2</em>. 6th ed.</li>
+<li>Wysocki, R. (2019) <em>Effective Project Management</em>. 8th ed. Wiley.</li>
+<li>Houghton, J. (2022) <em>Project Management Made Easy — the ECCSR Approach</em>.</li></ul></div>
+<div class="nav-footer">
+<a href="strategy.html" class="nav-link"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div class="nav-link-label">Previous</div>Strategy</div></a>
+<a href="index.html" class="nav-link" style="font-size:12px;color:#bbb;"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 1L1 7h3v7h8V7h3L8 1z" fill="none" stroke="#bbb" stroke-width="1.3"/></svg> Garden</a>
+<a href="implementation.html" class="nav-link"><div style="text-align:right;"><div class="nav-link-label">Next topic</div>Implementation</div><div class="nav-dot" style="background:#A8D8EA;border:2px solid #6BBCD4;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="#0C447C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></a>
+</div>
+</main>
+<script>
+  var f=document.querySelectorAll('.fade-in');var o=new IntersectionObserver(function(e){e.forEach(function(i){if(i.isIntersecting)i.target.classList.add('visible');});},{threshold:0.1});f.forEach(function(i){o.observe(i);});
+</script>
+</body></html>

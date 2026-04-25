@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The PM Garden — A Project Management Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Nunito',sans-serif; background:#f7f5ef; color:#2c2c2a; overflow-x:hidden; }
+
+    /* ── HERO SECTION ── */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #e8f4e0 0%, #f7f5ef 100%);
+    }
+
+    /* Drifting clouds */
+    .cloud {
+      position: absolute;
+      background: rgba(255,255,255,0.35);
+      border-radius: 50px;
+      animation: driftCloud linear infinite;
+    }
+    @keyframes driftCloud {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(calc(100vw + 200px)); }
+    }
+
+    /* Flying butterfly */
+    .butterfly {
+      position: absolute;
+      animation: flyButterfly 18s ease-in-out infinite;
+      opacity: 0.5;
+      z-index: 3;
+    }
+    @keyframes flyButterfly {
+      0% { transform: translate(0,0) rotate(0deg); }
+      25% { transform: translate(150px, -80px) rotate(10deg); }
+      50% { transform: translate(300px, -20px) rotate(-5deg); }
+      75% { transform: translate(100px, -120px) rotate(8deg); }
+      100% { transform: translate(0,0) rotate(0deg); }
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 800;
+      color: #2e5a1c;
+      line-height: 1.1;
+      margin-bottom: 0.8rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-title span { color: #b8860b; }
+    .hero-tagline {
+      font-size: 1.25rem;
+      color: #5a6a4a;
+      max-width: 580px;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+      position: relative; z-index: 2;
+    }
+    .hero-subtitle {
+      font-size: 0.95rem;
+      color: #8a9a7a;
+      font-style: italic;
+      margin-bottom: 2rem;
+      position: relative; z-index: 2;
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s ease-in-out infinite;
+      color: #8a9a7a;
+      font-size: 13px;
+      text-align: center;
+      z-index: 2;
+    }
+    .scroll-hint svg { display: block; margin: 6px auto 0; }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* ── NAVIGATION LINKS ── */
+    .top-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(247,245,239,0.92);
+      backdrop-filter: blur(10px);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+    .top-nav .logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #2e5a1c;
+      text-decoration: none;
+    }
+    .top-nav .logo span { color: #b8860b; }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #5a6a4a;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #2e5a1c; }
+
+    /* ── GARDEN SECTIONS ── */
+    .garden-section {
+      padding: 4rem 2rem 0;
+      text-align: center;
+      position: relative;
+    }
+    .garden-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #2e5a1c;
+      margin-bottom: 0.5rem;
+    }
+    .garden-section .section-desc {
+      font-size: 1.05rem;
+      color: #5a6a4a;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    /* ── SHARED GROUND ── */
+    .shared-ground {
+      position: relative;
+      width: 100%;
+      margin-top: -10px;
+    }
+    .shared-ground .ground-strip {
+      height: 110px;
+      background: linear-gradient(180deg, #6b8f3c 0%, #4a7028 60%, #3d5e22 100%);
+      border-radius: 300px 300px 0 0;
+      position: relative;
+      z-index: 1;
+    }
+    .shared-ground .ground-base-strip {
+      height: 50px;
+      background: #3d5e22;
+      position: relative;
+      z-index: 2;
+    }
+    .shared-ground .ground-grass {
+      position: absolute;
+      bottom: 50px;
+      left: 0; right: 0;
+      height: 60px;
+      z-index: 4;
+      pointer-events: none;
+    }
+    .shared-ground .ground-grass .grass-blade {
+      bottom: 0;
+    }
+
+    /* ── FLOWER CONTAINER ── */
+    .flower-area {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 0;
+      position: relative;
+      z-index: 5;
+      margin-bottom: -55px;
+    }
+    .flower-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .flower-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #2e5a1c;
+      margin-bottom: 0.5rem;
+    }
+    .flower-wrapper {
+      position: relative;
+      width: 600px;
+      height: 580px;
+      overflow: visible;
+    }
+    .flower-wrapper.small {
+      width: 420px;
+      height: 420px;
+    }
+
+    /* ── DECORATIVE STATIC FLOWERS ── */
+    .deco-flower {
+      position: absolute;
+      z-index: 6;
+      pointer-events: none;
+      animation: gentleSway 4s ease-in-out infinite;
+    }
+    @keyframes gentleSway {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+
+    /* Grass */
+    .grass-blade { position:absolute; bottom:48px; width:3px; border-radius:2px 2px 0 0; transform-origin:bottom center; z-index:4; opacity:0; transition:opacity 0.6s ease, height 0.8s cubic-bezier(0.34,1.2,0.64,1); height:0; }
+    .grass-blade.grown { opacity:0.7; }
+
+    /* Stems, leaves, petals */
+    .stem-svg { position:absolute; left:0; top:0; width:100%; height:100%; z-index:5; pointer-events:none; }
+    .stem-path { fill:none; stroke:#3d6b1e; stroke-width:5; stroke-linecap:round; visibility:hidden; stroke-dasharray:var(--len); stroke-dashoffset:var(--len); transition:stroke-dashoffset 0.7s cubic-bezier(0.34,1.2,0.64,1); }
+    .stem-path.drawn { stroke-dashoffset:0; visibility:visible; }
+    .leaf-svg { fill:#4a8a28; stroke:none; stroke-width:0; opacity:0; visibility:hidden; transition:opacity 0.4s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1), visibility 0s linear 0.5s; transform:scale(0); }
+    .leaf-svg.grown { opacity:0.85; visibility:visible; transform:scale(1); transition:opacity 0.4s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1), visibility 0s linear 0s; }
+    .petal { position:absolute; border-radius:50%; display:flex; align-items:center; justify-content:center; text-align:center; text-decoration:none; font-family:'Nunito',sans-serif; font-weight:600; font-size:12.5px; line-height:1.2; padding:14px; white-space:pre-line; z-index:8; cursor:pointer; opacity:0; pointer-events:none; transform:translate(-50%,-50%) scale(0); transition:transform 0.55s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease, left 0.55s cubic-bezier(0.34,1.56,0.64,1), top 0.55s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease, color 0.2s ease; }
+    .petal.visible { opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1); }
+    .petal:hover { transform:translate(-50%,-50%) scale(1.15) !important; z-index:12; }
+
+    /* Centre button */
+    .centre-bloom { position:absolute; left:50%; transform:translate(-50%,-50%); border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; z-index:20; transition:transform 0.3s ease; }
+    .centre-bloom:hover { transform:translate(-50%,-50%) scale(1.07); }
+    .bloom-title { color:#fff; font-family:'Playfair Display',serif; font-weight:600; text-align:center; line-height:1.25; text-shadow:0 1px 3px rgba(0,0,0,0.18); }
+    .bloom-cta { color:rgba(255,255,255,0.8); font-size:11px; margin-top:5px; font-weight:500; }
+
+    /* Wildflowers */
+    .small-flower { position:absolute; z-index:3; opacity:0; transition:opacity 1s ease 1.2s; }
+    .small-flower.shown { opacity:0.55; }
+
+    /* ── ABOUT PREVIEW ── */
+    .about-preview {
+      padding: 4rem 2rem;
+      background: #fff;
+    }
+    .about-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .about-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #2e5a1c;
+      margin-bottom: 1rem;
+    }
+    .about-text p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .about-text .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      background: #2e5a1c;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    .about-text .btn:hover { background: #1e4a10; }
+    .about-visual {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .about-stat {
+      background: #f7f5ef;
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+      width: 130px;
+    }
+    .about-stat .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #b8860b;
+    }
+    .about-stat .stat-label {
+      font-size: 12px;
+      color: #8a9a7a;
+      margin-top: 4px;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: #2e5a1c;
+      color: rgba(255,255,255,0.7);
+      padding: 2rem;
+      text-align: center;
+      font-size: 13px;
+    }
+    .site-footer a { color: #b8860b; text-decoration: none; }
+
+    /* ── CHATBOT TOGGLE ── */
+    .chat-toggle {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2e5a1c, #4a7028);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .chat-toggle:hover { transform: scale(1.08); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 1100px) {
+      .flower-area { flex-direction: column; align-items: center; gap: 1rem; }
+    }
+    @media(max-width: 768px) {
+      .hero-section { min-height: 80vh; padding: 2rem 1.25rem; }
+      .hero-title { font-size: 2.2rem; }
+      .hero-tagline { font-size: 0.95rem; max-width: 90%; }
+      .hero-subtitle { font-size: 0.85rem; }
+      .garden-section { padding: 2rem 1rem 0; }
+      .garden-section h2 { font-size: 1.6rem; }
+      .garden-section .section-desc { font-size: 0.9rem; }
+      .flower-label { font-size: 1.1rem; }
+      .flower-wrapper { transform: scale(0.48); transform-origin: top center; margin-bottom: -280px; height: 580px; }
+      .flower-wrapper.small { transform: scale(0.48); transform-origin: top center; margin-bottom: -200px; height: 420px; }
+      .about-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+      .about-text h2 { font-size: 1.5rem; }
+      .about-preview { padding: 2rem 1.25rem; }
+      .top-nav { padding: 0.5rem 1rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-links a { font-size: 0.75rem; }
+      .deco-flower { display: none; }
+      .shared-ground .ground-strip { border-radius: 100px 100px 0 0; height: 80px; }
+      .scroll-hint { bottom: 1rem; }
+      .chat-toggle { width: 48px; height: 48px; bottom: 1rem; right: 1rem; }
+    }
+    @media(max-width: 400px) {
+      .hero-title { font-size: 1.8rem; }
+      .flower-wrapper { transform: scale(0.38); margin-bottom: -340px; }
+      .flower-wrapper.small { transform: scale(0.38); margin-bottom: -240px; }
+      .nav-links a { font-size: 0.7rem; }
+    }
+
+    /* ── FADE-IN ── */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── SWAYING GRASS ── */
+    @keyframes sway {
+      0%, 100% { transform: rotate(var(--base-rot)); }
+      50% { transform: rotate(calc(var(--base-rot) + 4deg)); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ TOP NAV ════ -->
+  <nav class="top-nav" id="topNav">
+    <a href="#" class="logo">PM <span>Garden</span></a>
+    <div class="nav-links">
+      <a href="#topics">Topics</a>
+      <a href="#tools">Tools</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <section class="hero-section" id="hero">
+    <div id="clouds"></div>
+    <div class="butterfly" id="butterfly1" style="top:15%; left:20%;">
+      <svg width="30" height="24" viewBox="0 0 30 24"><ellipse cx="10" cy="8" rx="8" ry="7" fill="#E8A0BF" opacity="0.6" transform="rotate(-15 10 8)"/><ellipse cx="20" cy="8" rx="8" ry="7" fill="#C5A3D9" opacity="0.6" transform="rotate(15 20 8)"/><ellipse cx="11" cy="16" rx="5" ry="5" fill="#E8A0BF" opacity="0.4" transform="rotate(-10 11 16)"/><ellipse cx="19" cy="16" rx="5" ry="5" fill="#C5A3D9" opacity="0.4" transform="rotate(10 19 16)"/><line x1="15" y1="4" x2="15" y2="20" stroke="#6B1A3A" stroke-width="1" opacity="0.5"/></svg>
+    </div>
+    <h1 class="hero-title">The PM <span>Garden</span></h1>
+    <p class="hero-tagline">A practical project management guide for small businesses and charities growing in Ireland.</p>
+    <p class="hero-subtitle">Nurture your projects from seed to success</p>
+    <div class="scroll-hint">
+      Explore the garden
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 7l6 6 6-6" stroke="#8a9a7a" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </div>
+  </section>
+
+  <!-- ════ BOTH FLOWERS SIDE BY SIDE ════ -->
+  <section class="garden-section" id="topics">
+    <h2 class="fade-in">Explore the Garden</h2>
+    <p class="section-desc fade-in">Click each centre to bloom: the left flower covers 12 PM topics, the right one shows recommended tools.</p>
+    <div class="flower-area" id="tools">
+
+      <!-- Decorative static flower LEFT -->
+      <div class="deco-flower" id="decoLeft" style="left:2%; bottom:160px;">
+      </div>
+
+      <!-- Topics flower (left) -->
+      <div class="flower-col">
+        <div class="flower-label fade-in">PM Topics</div>
+        <div class="flower-wrapper" id="topicsFlower">
+          <svg id="topicsStemSvg" class="stem-svg" viewBox="0 0 600 580"></svg>
+          <div id="topicsPetals"></div>
+          <div id="topicsDecor"></div>
+          <div class="centre-bloom" id="topicsCentre" style="top:285px; width:138px; height:138px; background:radial-gradient(circle at 40% 35%,#e8c840,#c8960f); border:4px solid #a07808;">
+            <span class="bloom-title" style="font-size:15px;">Grow your<br>project</span>
+            <span class="bloom-cta" id="topicsCta">tap to bloom</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools flower (right) -->
+      <div class="flower-col" style="align-self:flex-end;">
+        <div class="flower-label fade-in">PM Tools</div>
+        <div class="flower-wrapper small" id="toolsFlower">
+          <svg id="toolsStemSvg" class="stem-svg" viewBox="0 0 420 420"></svg>
+          <div id="toolsPetals"></div>
+          <div class="centre-bloom" id="toolsCentre" style="top:205px; width:110px; height:110px; background:radial-gradient(circle at 40% 35%,#5DCAA5,#3da885); border:3px solid #2d8a6a;">
+            <span class="bloom-title" style="font-size:13px;">PM<br>Tools</span>
+            <span class="bloom-cta" id="toolsCta">tap to bloom</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decorative static flower RIGHT -->
+      <div class="deco-flower" id="decoRight" style="right:2%; bottom:160px;">
+      </div>
+
+    </div>
+
+    <!-- SHARED GROUND spanning full width -->
+    <div class="shared-ground">
+      <div class="ground-grass" id="sharedGrass"></div>
+      <div class="ground-strip"></div>
+      <div class="ground-base-strip" id="decoFlowersGround"></div>
+    </div>
+  </section>
+
+  <!-- ════ ABOUT PREVIEW ════ -->
+  <section class="about-preview fade-in" id="aboutPreview">
+    <div class="about-inner">
+      <div class="about-text">
+        <h2>About This Guide</h2>
+        <p>The PM Garden was created by <strong>Anikó Mikolasek</strong> as part of the MSc in Project Management at UCD Michael Smurfit Graduate Business School. It's designed to be a practical, accessible resource for anyone managing projects in small Irish organisations.</p>
+        <p>Whether you're a charity coordinator running your first funded project or a small business owner launching a new product, these guides distil academic best practice into actionable advice.</p>
+        <a href="about.html" class="btn">Learn more about the guide</a>
+      </div>
+      <div class="about-visual">
+        <div class="about-stat"><div class="stat-num">12</div><div class="stat-label">PM Topics</div></div>
+        <div class="about-stat"><div class="stat-num">50+</div><div class="stat-label">References</div></div>
+        <div class="about-stat"><div class="stat-num">6</div><div class="stat-label">Tools Reviewed</div></div>
+        <div class="about-stat"><div class="stat-num">AI</div><div class="stat-label">Chatbot</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="site-footer">
+    <p style="margin-bottom:6px;">The PM Garden &copy; 2026 | Created by <strong>Anikó Mikolasek</strong> for BMGT45510 Company Project</p>
+    <p style="margin-bottom:6px;">Special thanks to <strong>Joe Houghton</strong> | UCD Michael Smurfit Graduate Business School</p>
+    <p><a href="mailto:aniko.mikolasek@ucdconnect.ie">aniko.mikolasek@ucdconnect.ie</a> &middot; <a href="about.html">About</a> &middot; <a href="contact.html">Contact</a></p>
+  </footer>
+
+  <!-- ════ CHATBOT TOGGLE ════ -->
+  <button class="chat-toggle" id="chatToggle" title="Ask the PM Garden chatbot">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="12" r="1" fill="#fff"/><circle cx="12" cy="12" r="1" fill="#fff"/><circle cx="16" cy="12" r="1" fill="#fff"/></svg>
+  </button>
+
+  <!-- ════ JAVASCRIPT ════ -->
+  <script>
+    /* ── Clouds ── */
+    var cloudsDiv = document.getElementById('clouds');
+    for (var c = 0; c < 4; c++) {
+      var cl = document.createElement('div');
+      cl.className = 'cloud';
+      cl.style.top = (8 + c * 12 + Math.random() * 8) + '%';
+      cl.style.width = (100 + Math.random() * 150) + 'px';
+      cl.style.height = (30 + Math.random() * 20) + 'px';
+      cl.style.animationDuration = (30 + Math.random() * 30) + 's';
+      cl.style.animationDelay = (-Math.random() * 30) + 's';
+      cloudsDiv.appendChild(cl);
+    }
+
+    /* ── Scroll fade-in ── */
+    var faders = document.querySelectorAll('.fade-in');
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    faders.forEach(function(f) { obs.observe(f); });
+
+    /* ── Shared ground grass ── */
+    var sharedGrass = document.getElementById('sharedGrass');
+    for (var sg = 0; sg < 80; sg++) {
+      var blade = document.createElement('div');
+      blade.className = 'grass-blade';
+      blade.style.left = (Math.random() * 100) + '%';
+      blade.style.background = Math.random() > 0.5 ? '#7aa842' : '#5e9030';
+      var rot = Math.random() * 24 - 12;
+      blade.style.setProperty('--base-rot', rot + 'deg');
+      blade.style.transform = 'rotate(' + rot + 'deg)';
+      blade.style.animation = 'sway ' + (3 + Math.random() * 2) + 's ease-in-out infinite';
+      blade.style.animationDelay = (Math.random() * 2) + 's';
+      var bh = 18 + Math.random() * 40;
+      blade.dataset.h = bh;
+      sharedGrass.appendChild(blade);
+      setTimeout(function(el, ht) { el.classList.add('grown'); el.style.height = ht + 'px'; }, 200 + sg * 30, blade, bh);
+    }
+
+    /* ── Decorative static flowers in the ground ── */
+    var NS = 'http://www.w3.org/2000/svg';
+    function makeDecoFlower(parent, x, bottomY, size, petalColor, centerColor, delay) {
+      var container = document.createElement('div');
+      container.style.position = 'absolute';
+      container.style.left = x + '%';
+      container.style.bottom = bottomY + 'px';
+      container.style.zIndex = '6';
+      container.style.opacity = '0';
+      container.style.transition = 'opacity 0.8s ease';
+      container.style.animationDelay = delay + 's';
+
+      // Stem
+      var stemH = 30 + Math.random() * 50;
+      var stem = document.createElement('div');
+      stem.style.width = '3px';
+      stem.style.height = stemH + 'px';
+      stem.style.background = '#4a7a28';
+      stem.style.margin = '0 auto';
+      stem.style.borderRadius = '2px';
+      container.appendChild(stem);
+
+      // Leaves on stem
+      var leafSvg = document.createElementNS(NS, 'svg');
+      leafSvg.setAttribute('width', '30');
+      leafSvg.setAttribute('height', '16');
+      leafSvg.setAttribute('viewBox', '0 0 30 16');
+      leafSvg.style.position = 'absolute';
+      leafSvg.style.bottom = (stemH * 0.4) + 'px';
+      leafSvg.style.left = '50%';
+      leafSvg.style.transform = 'translateX(-50%)';
+      var lp1 = document.createElementNS(NS, 'path');
+      lp1.setAttribute('d', 'M15,8 C10,2 2,4 2,8 C2,12 10,14 15,8Z');
+      lp1.setAttribute('fill', '#4a8a28');
+      lp1.setAttribute('opacity', '0.7');
+      var lp2 = document.createElementNS(NS, 'path');
+      lp2.setAttribute('d', 'M15,8 C20,2 28,4 28,8 C28,12 20,14 15,8Z');
+      lp2.setAttribute('fill', '#5a9a2a');
+      lp2.setAttribute('opacity', '0.7');
+      leafSvg.appendChild(lp1);
+      leafSvg.appendChild(lp2);
+      container.appendChild(leafSvg);
+
+      // Flower head
+      var svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('width', size + '');
+      svg.setAttribute('height', size + '');
+      svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+      svg.style.display = 'block';
+      svg.style.margin = '-2px auto 0';
+      svg.classList.add('deco-flower');
+      svg.style.position = 'relative';
+      svg.style.animationDelay = (Math.random() * 3) + 's';
+      svg.style.animationDuration = (3 + Math.random() * 3) + 's';
+      var cx = size/2, cy = size/2, pr = size*0.35;
+      // Petals
+      for (var p = 0; p < 6; p++) {
+        var a = (p / 6) * Math.PI * 2;
+        var px = cx + pr * 0.6 * Math.cos(a);
+        var py = cy + pr * 0.6 * Math.sin(a);
+        var petal = document.createElementNS(NS, 'ellipse');
+        petal.setAttribute('cx', px);
+        petal.setAttribute('cy', py);
+        petal.setAttribute('rx', pr * 0.5);
+        petal.setAttribute('ry', pr * 0.35);
+        petal.setAttribute('fill', petalColor);
+        petal.setAttribute('opacity', '0.7');
+        petal.setAttribute('transform', 'rotate(' + (a * 180/Math.PI) + ' ' + px + ' ' + py + ')');
+        svg.appendChild(petal);
+      }
+      // Centre
+      var centre = document.createElementNS(NS, 'circle');
+      centre.setAttribute('cx', cx);
+      centre.setAttribute('cy', cy);
+      centre.setAttribute('r', pr * 0.3);
+      centre.setAttribute('fill', centerColor);
+      svg.appendChild(centre);
+      container.appendChild(svg);
+      parent.appendChild(container);
+
+      setTimeout(function() { container.style.opacity = '1'; }, 800 + delay * 1000);
+    }
+
+    var groundArea = document.getElementById('decoFlowersGround');
+
+    // Scatter decorative flowers
+    var decoData = [
+      { x: 3, b: 45, s: 24, pc: '#E8A0BF', cc: '#D4A017', d: 0.5 },
+      { x: 8, b: 52, s: 18, pc: '#FFD966', cc: '#BA8A10', d: 0.8 },
+      { x: 13, b: 40, s: 20, pc: '#A8D8EA', cc: '#D4A017', d: 1.1 },
+      { x: 18, b: 48, s: 16, pc: '#C8E6C9', cc: '#BA8A10', d: 0.3 },
+      { x: 82, b: 50, s: 22, pc: '#CECBF6', cc: '#D4A017', d: 0.6 },
+      { x: 87, b: 42, s: 18, pc: '#F9B4B4', cc: '#BA8A10', d: 0.9 },
+      { x: 92, b: 55, s: 20, pc: '#9FE1CB', cc: '#D4A017', d: 1.2 },
+      { x: 96, b: 44, s: 16, pc: '#F4C7A0', cc: '#BA8A10', d: 0.4 },
+    ];
+    decoData.forEach(function(d) {
+      makeDecoFlower(groundArea, d.x, d.b, d.s, d.pc, d.cc, d.d);
+    });
+
+    /* ── FLOWER BUILDER (reusable) ── */
+    function buildFlower(config) {
+      var CX = config.cx, CY = config.cy, R = config.radius;
+      var svgEl = document.getElementById(config.stemSvgId);
+      var petalL = document.getElementById(config.petalLayerId);
+      var grassL = document.getElementById(config.grassId);
+      var centreBtn = document.getElementById(config.centreId);
+      var ctaEl = document.getElementById(config.ctaId);
+      var petalEls = [], stemPaths = [], leafSvgs = [];
+      var expanded = false;
+      var NS = 'http://www.w3.org/2000/svg';
+
+      /* Grass */
+      if (config.grassId) {
+        var grassL = document.getElementById(config.grassId);
+        for (var g = 0; g < config.grassCount; g++) {
+        var blade = document.createElement('div');
+        blade.className = 'grass-blade';
+        blade.style.left = (15 + Math.random() * (config.width - 30)) + 'px';
+        blade.style.background = Math.random() > 0.5 ? '#7aa842' : '#5e9030';
+        var rot = Math.random() * 24 - 12;
+        blade.style.setProperty('--base-rot', rot + 'deg');
+        blade.style.transform = 'rotate(' + rot + 'deg)';
+        blade.style.animation = 'sway ' + (3 + Math.random() * 2) + 's ease-in-out infinite';
+        blade.style.animationDelay = (Math.random() * 2) + 's';
+        var bh = 18 + Math.random() * 38;
+        blade.dataset.h = bh;
+        grassL.appendChild(blade);
+        setTimeout(function(el, ht) { el.classList.add('grown'); el.style.height = ht + 'px'; }, 200 + g * 40, blade, bh);
+      }
+      }
+
+      /* Wildflowers */
+      if (config.decorId) {
+        var decorL = document.getElementById(config.decorId);
+        var wfPos = [];
+        for (var w = 0; w < 5; w++) wfPos.push({ x: 30 + Math.random() * (config.width - 60), y: config.height - 95 + Math.random() * 20 });
+        var wfCols = ['#E8A0BF','#FFD966','#A8D8EA','#C8E6C9','#CECBF6'];
+        wfPos.forEach(function(pos, idx) {
+          var s = document.createElementNS(NS, 'svg');
+          s.setAttribute('width','14'); s.setAttribute('height','14'); s.setAttribute('viewBox','0 0 14 14');
+          s.classList.add('small-flower'); s.style.left = pos.x+'px'; s.style.top = pos.y+'px';
+          var c1 = document.createElementNS(NS,'circle'); c1.setAttribute('cx','7'); c1.setAttribute('cy','7'); c1.setAttribute('r','5'); c1.setAttribute('fill',wfCols[idx]);
+          var c2 = document.createElementNS(NS,'circle'); c2.setAttribute('cx','7'); c2.setAttribute('cy','7'); c2.setAttribute('r','2'); c2.setAttribute('fill','#D4A017');
+          s.appendChild(c1); s.appendChild(c2); decorL.appendChild(s);
+          setTimeout(function(el){ el.classList.add('shown'); }, 1500+idx*200, s);
+        });
+      }
+
+      /* Build stems + leaves + petals */
+      config.topics.forEach(function(t, i) {
+        var angle = (i / config.topics.length) * 2 * Math.PI - Math.PI / 2;
+        var tx = CX + R * Math.cos(angle);
+        var ty = CY + R * Math.sin(angle);
+        var startR = config.centreSize / 2 + 4;
+        var endR = R - config.petalSize / 2 - 2;
+        var sa = Math.atan2(ty - CY, tx - CX);
+        var sx = CX + startR * Math.cos(sa), sy = CY + startR * Math.sin(sa);
+        var ex = CX + endR * Math.cos(sa), ey = CY + endR * Math.sin(sa);
+
+        /* Stem */
+        var path = document.createElementNS(NS, 'path');
+        path.setAttribute('d', 'M' + sx + ',' + sy + ' L' + ex + ',' + ey);
+        path.classList.add('stem-path');
+        var len = Math.sqrt((ex-sx)*(ex-sx) + (ey-sy)*(ey-sy));
+        path.style.setProperty('--len', len);
+        svgEl.appendChild(path);
+        stemPaths.push(path);
+
+        /* Paired leaves */
+        var leaves = [];
+        [0.35, 0.65].forEach(function(frac, li) {
+          var lx = sx + (ex-sx)*frac, ly = sy + (ey-sy)*frac;
+          var side = li === 0 ? -1 : 1;
+          var perp = sa + side * Math.PI/2;
+          var leafSize = config.leafSize || 22;
+          var tipX = lx + leafSize * Math.cos(perp + side*0.3);
+          var tipY = ly + leafSize * Math.sin(perp + side*0.3);
+          var cos = Math.cos(sa), sin = Math.sin(sa);
+          var cp1x = lx + 8*Math.cos(perp+side*0.8), cp1y = ly + 8*Math.sin(perp+side*0.8);
+          var cp2x = lx + 18*Math.cos(perp+side*0.15), cp2y = ly + 18*Math.sin(perp+side*0.15);
+          var lp = document.createElementNS(NS,'path');
+          lp.setAttribute('d','M'+lx+','+ly+' C'+cp1x+','+cp1y+' '+(tipX-3*cos)+','+(tipY-3*sin)+' '+tipX+','+tipY+' C'+(tipX+3*cos)+','+(tipY+3*sin)+' '+cp2x+','+cp2y+' '+lx+','+ly+'Z');
+          lp.classList.add('leaf-svg');
+          svgEl.appendChild(lp);
+          leaves.push(lp);
+        });
+        leafSvgs.push(leaves);
+
+        /* Petal */
+        var el = document.createElement('a');
+        el.className = 'petal';
+        el.href = t.url; el.target = '_top'; el.rel = 'noopener';
+        el.style.width = config.petalSize + 'px'; el.style.height = config.petalSize + 'px';
+        el.style.left = CX + 'px'; el.style.top = CY + 'px';
+        el.style.transform = 'translate(-50%,-50%)';
+        el.style.background = t.petal; el.style.border = '3px solid ' + t.dark; el.style.color = t.text;
+        el.textContent = t.name;
+        el.dataset.tx = tx; el.dataset.ty = ty;
+        el.dataset.bg = t.petal; el.dataset.hbg = t.dark; el.dataset.oc = t.text;
+        el.addEventListener('mouseenter', function(){ this.style.background=this.dataset.hbg; this.style.color='#fff'; });
+        el.addEventListener('mouseleave', function(){ this.style.background=this.dataset.bg; this.style.color=this.dataset.oc; });
+        el.addEventListener('click', function(e){ if(!expanded) e.preventDefault(); });
+        petalL.appendChild(el);
+        petalEls.push(el);
+      });
+
+      /* Toggle */
+      function toggle() {
+        expanded = !expanded;
+        petalEls.forEach(function(el, i) {
+          var delay = i * 55;
+          if (expanded) {
+            setTimeout(function(){ stemPaths[i].classList.add('drawn'); }, delay);
+            setTimeout(function(){ leafSvgs[i].forEach(function(lf){ lf.classList.add('grown'); }); }, delay+300);
+            setTimeout(function(){ el.style.left=el.dataset.tx+'px'; el.style.top=el.dataset.ty+'px'; el.style.opacity='1'; el.style.pointerEvents='auto'; el.classList.add('visible'); }, delay+150);
+          } else {
+            var rd = (config.topics.length-1-i)*35;
+            setTimeout(function(){ el.classList.remove('visible'); el.style.opacity='0'; el.style.pointerEvents='none'; setTimeout(function(){ el.style.left=CX+'px'; el.style.top=CY+'px'; }, 400); }, rd);
+            setTimeout(function(){ leafSvgs[i].forEach(function(lf){ lf.classList.remove('grown'); }); }, rd+80);
+            setTimeout(function(){ stemPaths[i].classList.remove('drawn'); }, rd+160);
+          }
+        });
+        ctaEl.textContent = expanded ? 'tap to close' : 'tap to bloom';
+      }
+      centreBtn.addEventListener('click', toggle);
+    }
+
+    /* ── BUILD TOPICS FLOWER ── */
+    buildFlower({
+      cx: 300, cy: 285, radius: 200, width: 600, height: 580,
+      centreSize: 138, petalSize: 108, leafSize: 22, grassCount: 0,
+      stemSvgId: 'topicsStemSvg', petalLayerId: 'topicsPetals',
+      grassId: null, decorId: 'topicsDecor',
+      centreId: 'topicsCentre', ctaId: 'topicsCta',
+      topics: [
+        { name:"Strategy", url:"strategy.html", petal:"#E8A0BF", dark:"#D4749E", text:"#6B1A3A" },
+        { name:"Planning", url:"planning.html", petal:"#F4C7A0", dark:"#E8A86E", text:"#6B3A10" },
+        { name:"Implement-\nation", url:"implementation.html", petal:"#A8D8EA", dark:"#6BBCD4", text:"#0C447C" },
+        { name:"Teams", url:"teams.html", petal:"#FFD966", dark:"#E8BF30", text:"#5C4A05" },
+        { name:"Leadership", url:"leadership.html", petal:"#C5A3D9", dark:"#A87CC4", text:"#3C1D5C" },
+        { name:"Stake-\nholders", url:"stakeholders.html", petal:"#F9B4B4", dark:"#F08A8A", text:"#791F1F" },
+        { name:"Risk", url:"risk.html", petal:"#F0997B", dark:"#D85A30", text:"#4A1B0C" },
+        { name:"Method-\nologies", url:"methodologies.html", petal:"#B5D8A0", dark:"#8CC46A", text:"#27500A" },
+        { name:"Governance", url:"governance.html", petal:"#A0C4E8", dark:"#6AA0D4", text:"#042C53" },
+        { name:"Ethics", url:"ethics.html", petal:"#C8E6C9", dark:"#81C784", text:"#173404" },
+        { name:"Sustain-\nability", url:"sustainability.html", petal:"#9FE1CB", dark:"#5DCAA5", text:"#04342C" },
+        { name:"AI in PM", url:"ai-in-pm.html", petal:"#CECBF6", dark:"#AFA9EC", text:"#26215C" }
+      ]
+    });
+
+    /* ── BUILD TOOLS FLOWER ── */
+    buildFlower({
+      cx: 210, cy: 205, radius: 140, width: 420, height: 420,
+      centreSize: 110, petalSize: 80, leafSize: 16, grassCount: 0,
+      stemSvgId: 'toolsStemSvg', petalLayerId: 'toolsPetals',
+      grassId: null, decorId: null,
+      centreId: 'toolsCentre', ctaId: 'toolsCta',
+      topics: [
+        { name:"Trello", url:"tools.html#trello", petal:"#E1F5EE", dark:"#0F6E56", text:"#085041" },
+        { name:"Asana", url:"tools.html#asana", petal:"#FAECE7", dark:"#993C1D", text:"#712B13" },
+        { name:"MS\nPlanner", url:"tools.html#planner", petal:"#E6F1FB", dark:"#185FA5", text:"#0C447C" },
+        { name:"Monday\n.com", url:"tools.html#monday", petal:"#FAEEDA", dark:"#854F0B", text:"#633806" },
+        { name:"Miro", url:"tools.html#miro", petal:"#FBEAF0", dark:"#993556", text:"#72243E" },
+        { name:"Canva", url:"tools.html#canva", petal:"#EEEDFE", dark:"#534AB7", text:"#3C3489" }
+      ]
+    });
+
+    /* ── Chatbot toggle placeholder ── */
+    document.getElementById('chatToggle').addEventListener('click', function() {
+      window.open('chatbot.html', '_blank', 'width=420,height=620');
+    });
+
+    /* ── Navbar hide on scroll down ── */
+    var lastScroll = 0;
+    window.addEventListener('scroll', function() {
+      var st = window.pageYOffset;
+      document.getElementById('topNav').style.transform = st > lastScroll && st > 100 ? 'translateY(-100%)' : 'translateY(0)';
+      lastScroll = st;
+    });
+  </script>
+</body>
+</html>

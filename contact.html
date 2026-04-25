@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — The PM Garden</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Nunito',sans-serif;background:#f7f5ef;color:#2c2c2a;}
+    .top-nav{position:fixed;top:0;left:0;right:0;background:rgba(247,245,239,0.92);backdrop-filter:blur(10px);padding:0.75rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;border-bottom:1px solid rgba(0,0,0,0.05);}
+    .top-nav .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;color:#2e5a1c;text-decoration:none;}
+    .top-nav .logo span{color:#b8860b;}
+    .nav-links{display:flex;gap:1.5rem;}
+    .nav-links a{text-decoration:none;font-size:0.88rem;font-weight:600;color:#5a6a4a;transition:color 0.2s;}
+    .nav-links a:hover{color:#2e5a1c;}
+    .page-hero{background:linear-gradient(135deg,#b8860b,#d4a017);padding:6rem 2rem 3rem;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'';position:absolute;bottom:-60px;left:20%;width:250px;height:250px;border-radius:50%;background:rgba(255,255,255,0.06);}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:3rem;font-weight:800;color:#fff;margin-bottom:0.5rem;}
+    .page-hero p{color:rgba(255,255,255,0.8);font-size:1.1rem;}
+    .content{max-width:600px;margin:0 auto;padding:3rem 2rem;}
+    .contact-card{background:#fff;border-radius:16px;padding:2.5rem;border:1px solid #e8e6e0;margin-bottom:2rem;}
+    .contact-card h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:#2e5a1c;margin-bottom:1rem;}
+    .field{margin-bottom:1.25rem;}
+    .field label{display:block;font-size:13px;font-weight:700;color:#2c2c2a;margin-bottom:6px;}
+    .field input,.field textarea,.field select{width:100%;padding:12px 16px;border:1.5px solid #e8e6e0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;background:#f7f5ef;transition:border-color 0.2s;outline:none;}
+    .field input:focus,.field textarea:focus,.field select:focus{border-color:#4a7028;}
+    .field textarea{min-height:120px;resize:vertical;}
+    .submit-btn{width:100%;padding:14px;background:#2e5a1c;color:#fff;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:background 0.2s;}
+    .submit-btn:hover{background:#1e4a10;}
+    .alt-contact{text-align:center;padding:1.5rem;background:#fff;border-radius:12px;border:1px solid #e8e6e0;}
+    .alt-contact h3{font-size:1rem;font-weight:700;color:#2c2c2a;margin-bottom:0.5rem;}
+    .alt-contact p{font-size:14px;color:#666;line-height:1.6;}
+    .alt-contact a{color:#2e5a1c;font-weight:600;}
+    .success-msg{display:none;text-align:center;padding:2rem;background:#F0F9F0;border:1px solid #81C784;border-radius:12px;}
+    .success-msg h3{color:#173404;font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:0.5rem;}
+    .success-msg p{color:#27500A;font-size:14px;}
+    .site-footer{background:#2e5a1c;color:rgba(255,255,255,0.7);padding:2rem;text-align:center;font-size:13px;margin-top:3rem;}
+    .site-footer a{color:#b8860b;text-decoration:none;}
+    @media(max-width:640px){.page-hero{padding:5rem 1.25rem 2rem;}.page-hero h1{font-size:2rem;}.content{padding:2rem 1.25rem;}}
+  </style>
+</head>
+<body>
+  <nav class="top-nav">
+    <a href="index.html" class="logo">PM <span>Garden</span></a>
+    <div class="nav-links">
+      <a href="index.html#topics">Topics</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <h1>Get in Touch</h1>
+    <p>Questions, feedback, or suggestions — I'd love to hear from you!</p>
+  </header>
+
+  <main class="content">
+    <div class="contact-card" id="contactForm">
+      <h2>Send a Message</h2>
+      <div class="field">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" placeholder="e.g. Sarah O'Brien">
+      </div>
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="e.g. sarah@example.com">
+      </div>
+      <div class="field">
+        <label for="topic">What's this about?</label>
+        <select id="topic">
+          <option value="">Choose a topic...</option>
+          <option value="feedback">General feedback</option>
+          <option value="question">PM question</option>
+          <option value="suggestion">Content suggestion</option>
+          <option value="collaboration">Collaboration opportunity</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Your Message</label>
+        <textarea id="message" placeholder="What would you like to say?"></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitForm()">Send Message</button>
+    </div>
+
+    <div class="success-msg" id="successMsg">
+      <h3>Message Sent!</h3>
+      <p>Thank you for reaching out. I'll get back to you as soon as possible.</p>
+    </div>
+
+    <div class="alt-contact">
+      <h3>Other ways to connect</h3>
+      <p>You can also reach me via email at <a href="mailto:aniko.mikolasek@ucdconnect.ie">aniko.mikolasek@ucdconnect.ie</a></p>
+      <p style="margin-top:8px;font-size:12px;color:#999;">This guide was created at UCD Michael Smurfit Graduate Business School</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>The PM Garden © 2026 | UCD Smurfit — BMGT45510 | <a href="index.html">Home</a> · <a href="about.html">About</a></p>
+  </footer>
+
+  <script>
+    function submitForm() {
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var message = document.getElementById('message').value;
+      if (!name || !email || !message) { alert('Please fill in all required fields.'); return; }
+      // In production, this would POST to a backend or use a service like Formspree
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
